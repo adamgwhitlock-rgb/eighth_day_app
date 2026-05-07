@@ -224,7 +224,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <script>
 // ── CONFIG ──────────────────────────────────────────────
 // Paste your Gemini API key here between the quotes
-const GEMINI_KEY = 'AIzaSyDVYbrgBqavVkdheQjnF8mTWgbJJIcTtQQ';
+const GEMINI_KEY = 'AIzaSyDph11cHoJtz3V86nPFjjeNNlcHw7S2E8o';
 // ────────────────────────────────────────────────────────
 
 let profile = {};
@@ -306,7 +306,7 @@ async function callGemini(prompt, containerId){
   const container=document.getElementById(containerId);
   container.innerHTML='<div class="loader"><div class="pulse"><span></span><span></span><span></span></div>Writing…</div>';
   try{
-    const res=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key='+GEMINI_KEY,{
+    const res=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-latest:generateContent?key='+GEMINI_KEY,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
