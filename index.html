@@ -4,433 +4,140 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Eighth Day — Your Biblical Pattern Reading</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Cormorant+Infant:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --navy: #0F1829;
-  --navy-mid: #1A2540;
-  --navy-light: #243050;
-  --gold: #C9973F;
-  --gold-light: #E8C97A;
-  --gold-pale: #F5E6C0;
-  --gold-dim: #8A6528;
-  --cream: #F2E8D5;
-  --cream-dim: #D4C5A9;
-  --text-body: #C8BBA8;
-  --text-muted: #7A7060;
-  --border: rgba(201,151,63,0.2);
-  --border-strong: rgba(201,151,63,0.45);
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--navy);
-  color: var(--cream);
-  font-family: 'Inter', sans-serif;
-  font-weight: 300;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 20% 20%, rgba(201,151,63,0.06) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 80%, rgba(15,24,41,0.8) 0%, transparent 60%),
-    radial-gradient(ellipse at 50% 0%, rgba(26,37,64,0.9) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.app {
-  position: relative;
-  z-index: 1;
-  min-height: 100vh;
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 0 20px 80px;
-}
-
-.screen { display: none; animation: fadeIn .4s ease; }
-.screen.active { display: block; }
-@keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-
-.site-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 28px 0 0;
-  margin-bottom: 40px;
-}
-
-.logo { display: flex; align-items: center; gap: 12px; }
-
-.logo-mark {
-  width: 38px; height: 38px;
-  border: 1px solid var(--border-strong);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--gold);
-  font-size: 18px;
-  font-family: 'Cormorant Garamond', serif;
-  background: rgba(201,151,63,0.07);
-}
-
-.logo-text { display: flex; flex-direction: column; }
-
-.logo-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 15px; font-weight: 500;
-  color: var(--gold-light); letter-spacing: .04em;
-}
-
-.logo-sub {
-  font-size: 11px; color: var(--text-muted);
-  letter-spacing: .06em; text-transform: uppercase; margin-top: 1px;
-}
-
-.hero { text-align: center; padding: 20px 0 48px; }
-
-.hero-ornament {
-  color: var(--gold);
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 28px; letter-spacing: .3em; margin-bottom: 24px; opacity: .7;
-}
-
-.hero h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(42px, 10vw, 64px);
-  font-weight: 300; color: var(--gold-light);
-  line-height: 1.1; letter-spacing: .02em; margin-bottom: 16px;
-}
-
-.hero h1 em { font-style: italic; color: var(--gold-pale); }
-
-.hero-sub {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 18px; font-weight: 400; font-style: italic;
-  color: var(--cream-dim); line-height: 1.6;
-  max-width: 440px; margin: 0 auto 32px;
-}
-
-.divider { display: flex; align-items: center; gap: 14px; margin: 28px 0; }
-.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-.divider span { color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 16px; opacity: .8; }
-
-.card {
-  background: rgba(26,37,64,0.6);
-  border: 1px solid var(--border);
-  border-radius: 16px; padding: 28px; margin-bottom: 16px;
-  backdrop-filter: blur(8px);
-}
-
-.card-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px; font-weight: 500;
-  color: var(--gold-light); margin-bottom: 8px; letter-spacing: .01em;
-}
-
-.card-body { font-size: 14px; color: var(--text-body); line-height: 1.75; }
-
-.field { margin-bottom: 20px; }
-
-.field label {
-  display: block; font-size: 11px;
-  text-transform: uppercase; letter-spacing: .1em;
-  color: var(--gold-dim); margin-bottom: 8px; font-weight: 400;
-}
-
-.field input[type="date"],
-.field input[type="text"],
-.field textarea,
-.field select {
-  width: 100%;
-  background: rgba(15,24,41,0.8);
-  border: 1px solid var(--border);
-  border-radius: 10px; padding: 14px 16px;
-  font-size: 15px; color: var(--cream);
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 400; outline: none;
-  transition: border-color .2s;
-  -webkit-appearance: none; appearance: none;
-}
-
-.field input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(70%) sepia(30%) saturate(400%) hue-rotate(10deg); opacity: .7;
-}
-
-.field input:focus, .field textarea:focus, .field select:focus { border-color: var(--border-strong); }
-.field input::placeholder, .field textarea::placeholder { color: var(--text-muted); font-style: italic; }
-.field textarea { resize: vertical; min-height: 120px; line-height: 1.65; }
-.field select option { background: var(--navy-mid); color: var(--cream); }
-
-.includes { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
-
-.include-item { display: flex; align-items: center; gap: 12px; font-size: 14px; }
-
-.include-item .check {
-  width: 20px; height: 20px; border-radius: 50%;
-  background: rgba(201,151,63,0.15); border: 1px solid var(--border-strong);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; color: var(--gold); font-size: 10px;
-}
-
-.include-item .lock {
-  width: 20px; height: 20px; border-radius: 50%;
-  background: rgba(201,151,63,0.06); border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; color: var(--text-muted); font-size: 10px;
-}
-
-.include-text { color: var(--text-body); }
-.include-text.locked { color: var(--text-muted); }
-
-.btn {
-  display: inline-flex; align-items: center; justify-content: center;
-  gap: 8px; padding: 14px 24px; border-radius: 10px;
-  font-size: 14px; font-weight: 400; cursor: pointer;
-  transition: all .2s; border: 1px solid var(--border);
-  background: transparent; color: var(--cream);
-  font-family: 'Inter', sans-serif; letter-spacing: .02em; text-decoration: none;
-}
-
-.btn:hover { background: rgba(201,151,63,0.08); border-color: var(--border-strong); }
-.btn:active { transform: scale(.98); }
-.btn-full { width: 100%; }
-
-.btn-primary {
-  background: var(--gold); color: var(--navy); border-color: var(--gold);
-  font-weight: 500; letter-spacing: .04em; text-transform: uppercase; font-size: 13px;
-}
-
-.btn-primary:hover { background: var(--gold-light); border-color: var(--gold-light); color: var(--navy); }
-
-.btn-ghost {
-  background: transparent; border-color: var(--border);
-  color: var(--text-muted); font-size: 13px; padding: 10px 18px;
-}
-
-.btn-ghost:hover { color: var(--cream); background: rgba(255,255,255,0.04); }
-
-.coords { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
-
-.coord-box {
-  background: rgba(15,24,41,0.7); border: 1px solid var(--border);
-  border-radius: 12px; padding: 16px;
-}
-
-.coord-label { font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: var(--gold-dim); margin-bottom: 6px; }
-
-.coord-value {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 20px; font-weight: 500; color: var(--gold-light); line-height: 1.2;
-}
-
-.coord-detail { font-size: 12px; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
-
-.num-row { display: flex; gap: 8px; margin-top: 8px; }
-
-.num-badge {
-  width: 38px; height: 38px; border: 1px solid var(--border-strong); border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500;
-  color: var(--gold-light); background: rgba(201,151,63,0.07);
-}
-
-.num-badge.root { background: rgba(201,151,63,0.18); border-color: var(--gold); color: var(--gold-pale); }
-
-.reading-body {
-  font-family: 'Cormorant Infant', serif; font-size: 17px;
-  line-height: 1.85; color: var(--cream-dim);
-}
-
-.reading-body strong {
-  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 500;
-  text-transform: uppercase; letter-spacing: .1em; color: var(--gold);
-  display: block; margin: 24px 0 10px;
-}
-
-.reading-body p { margin-bottom: 14px; }
-.reading-body em { color: var(--cream); font-style: italic; }
-
-.loader {
-  display: flex; align-items: center; gap: 12px; padding: 16px 0;
-  color: var(--text-muted); font-size: 14px;
-  font-family: 'Cormorant Garamond', serif; font-style: italic;
-}
-
-.pulse { display: flex; gap: 5px; }
-
-.pulse span {
-  width: 4px; height: 4px; border-radius: 50%; background: var(--gold);
-  animation: p 1.4s ease-in-out infinite;
-}
-
-.pulse span:nth-child(2) { animation-delay: .2s; }
-.pulse span:nth-child(3) { animation-delay: .4s; }
-
-@keyframes p {
-  0%, 80%, 100% { opacity: .2; transform: scale(.8); }
-  40% { opacity: 1; transform: scale(1); }
-}
-
-.paywall {
-  border: 1px solid var(--border-strong); border-radius: 16px; padding: 28px;
-  background: rgba(201,151,63,0.04); margin: 24px 0;
-  position: relative; overflow: hidden;
-}
-
-.paywall::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-
-.paywall-title {
-  font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 500;
-  color: var(--gold-light); margin-bottom: 8px; letter-spacing: .01em;
-}
-
-.paywall-body { font-size: 14px; color: var(--text-body); line-height: 1.7; margin-bottom: 24px; }
-
-.price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-
-.price-card {
-  background: rgba(15,24,41,0.8); border: 1px solid var(--border);
-  border-radius: 12px; padding: 18px; cursor: pointer; transition: all .2s;
-}
-
-.price-card:hover { border-color: var(--border-strong); }
-.price-card.selected { border-color: var(--gold); background: rgba(201,151,63,0.08); }
-
-.price-badge {
-  display: inline-block; background: var(--gold); color: var(--navy);
-  font-size: 9px; font-weight: 500; text-transform: uppercase;
-  letter-spacing: .1em; padding: 3px 8px; border-radius: 4px; margin-bottom: 10px;
-}
-
-.price-name { font-family: 'Cormorant Garamond', serif; font-size: 15px; color: var(--cream-dim); margin-bottom: 4px; }
-
-.price-amount {
-  font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 500;
-  color: var(--gold-light); line-height: 1.1; margin-bottom: 6px;
-}
-
-.price-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
-
-.loading-steps { display: flex; flex-direction: column; gap: 12px; }
-
-.loading-step {
-  display: flex; align-items: center; gap: 12px;
-  font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic;
-  color: var(--text-muted); transition: color .3s;
-}
-
-.loading-step.done { color: var(--gold-dim); }
-.loading-step.active { color: var(--cream-dim); }
-
-.step-check {
-  width: 18px; height: 18px; border: 1px solid var(--border); border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 9px; flex-shrink: 0; color: var(--text-muted);
-}
-
-.step-check.done { background: rgba(201,151,63,0.2); border-color: var(--gold-dim); color: var(--gold); }
-
-.profile-bar {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 20px; background: rgba(26,37,64,0.8);
-  border: 1px solid var(--border); border-radius: 12px; margin-bottom: 16px;
-}
-
-.profile-bar-name { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--gold-light); }
-.profile-bar-coords { font-size: 12px; color: var(--text-muted); letter-spacing: .04em; }
-
-.foot-note {
-  text-align: center; font-size: 12px; color: var(--text-muted);
-  line-height: 1.7; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border);
-}
-
-.foot-note em { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold-dim); }
-
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
-
-@media (max-width: 480px) {
-  .price-grid { grid-template-columns: 1fr; }
-  .coords { grid-template-columns: 1fr; }
-  .hero h1 { font-size: 48px; }
-  .card { padding: 20px; }
-}
+:root{--navy:#0F1829;--navy-mid:#1A2540;--gold:#C9973F;--gold-light:#E8C97A;--gold-pale:#F5E6C0;--gold-dim:#8A6528;--cream:#F2E8D5;--cream-dim:#D4C5A9;--text-body:#C8BBA8;--text-muted:#7A7060;--border:rgba(201,151,63,0.2);--border-strong:rgba(201,151,63,0.45)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--navy);color:var(--cream);font-family:'Inter',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(201,151,63,.06) 0,transparent 60%),radial-gradient(ellipse at 80% 80%,rgba(15,24,41,.8) 0,transparent 60%);pointer-events:none;z-index:0}
+.app{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 80px}
+.screen{display:none;animation:fadeIn .4s ease}.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.site-header{display:flex;align-items:center;justify-content:space-between;padding:28px 0 0;margin-bottom:40px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:38px;height:38px;border:1px solid var(--border-strong);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:18px;font-family:'Cormorant Garamond',serif;background:rgba(201,151,63,.07)}
+.logo-name{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:500;color:var(--gold-light);letter-spacing:.04em}
+.logo-sub{font-size:11px;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;margin-top:1px}
+.hero{text-align:center;padding:20px 0 48px}
+.hero-ornament{color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:28px;letter-spacing:.3em;margin-bottom:24px;opacity:.7}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,10vw,64px);font-weight:300;color:var(--gold-light);line-height:1.1;letter-spacing:.02em;margin-bottom:16px}
+.hero h1 em{font-style:italic;color:var(--gold-pale)}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:var(--cream-dim);line-height:1.6;max-width:440px;margin:0 auto 32px}
+.divider{display:flex;align-items:center;gap:14px;margin:28px 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.divider span{color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:16px;opacity:.8}
+.card{background:rgba(26,37,64,.6);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:16px;backdrop-filter:blur(8px)}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--gold-light);margin-bottom:8px}
+.card-body{font-size:14px;color:var(--text-body);line-height:1.75}
+.field{margin-bottom:20px}
+.field label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold-dim);margin-bottom:8px}
+.field input,.field textarea,.field select{width:100%;background:rgba(15,24,41,.8);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-size:15px;color:var(--cream);font-family:'Cormorant Garamond',serif;outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none}
+.field input::-webkit-calendar-picker-indicator{filter:invert(70%) sepia(30%) saturate(400%) hue-rotate(10deg);opacity:.7}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--border-strong)}
+.field input::placeholder,.field textarea::placeholder{color:var(--text-muted);font-style:italic}
+.field textarea{resize:vertical;min-height:120px;line-height:1.65}
+.field select option{background:var(--navy-mid);color:var(--cream)}
+.includes{display:flex;flex-direction:column;gap:10px;margin:20px 0}
+.include-item{display:flex;align-items:center;gap:12px;font-size:14px}
+.icon-circle{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px}
+.icon-check{background:rgba(201,151,63,.15);border:1px solid var(--border-strong);color:var(--gold)}
+.icon-lock{background:rgba(201,151,63,.06);border:1px solid var(--border);color:var(--text-muted)}
+.include-text{color:var(--text-body)}
+.include-text.locked{color:var(--text-muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:10px;font-size:14px;cursor:pointer;transition:all .2s;border:1px solid var(--border);background:transparent;color:var(--cream);font-family:'Inter',sans-serif;text-decoration:none}
+.btn:hover{background:rgba(201,151,63,.08);border-color:var(--border-strong)}
+.btn-full{width:100%}
+.btn-primary{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:500;letter-spacing:.04em;text-transform:uppercase;font-size:13px}
+.btn-primary:hover{background:var(--gold-light);border-color:var(--gold-light);color:var(--navy)}
+.btn-ghost{background:transparent;border-color:var(--border);color:var(--text-muted);font-size:13px;padding:10px 18px}
+.btn-ghost:hover{color:var(--cream);background:rgba(255,255,255,.04)}
+.coords{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+.coord-box{background:rgba(15,24,41,.7);border:1px solid var(--border);border-radius:12px;padding:16px}
+.coord-label{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--gold-dim);margin-bottom:6px}
+.coord-value{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--gold-light);line-height:1.2}
+.coord-detail{font-size:12px;color:var(--text-muted);margin-top:4px;line-height:1.4}
+.num-row{display:flex;gap:8px;margin-top:8px}
+.num-badge{width:38px;height:38px;border:1px solid var(--border-strong);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--gold-light);background:rgba(201,151,63,.07)}
+.num-badge.root{background:rgba(201,151,63,.18);border-color:var(--gold);color:var(--gold-pale)}
+.reading-body{font-family:'Cormorant Infant',serif;font-size:17px;line-height:1.85;color:var(--cream-dim)}
+.reading-body strong{font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);display:block;margin:24px 0 10px}
+.reading-body p{margin-bottom:14px}
+.reading-body em{color:var(--cream);font-style:italic}
+.loader{display:flex;align-items:center;gap:12px;padding:16px 0;color:var(--text-muted);font-size:14px;font-family:'Cormorant Garamond',serif;font-style:italic}
+.pulse{display:flex;gap:5px}
+.pulse span{width:4px;height:4px;border-radius:50%;background:var(--gold);animation:p 1.4s ease-in-out infinite}
+.pulse span:nth-child(2){animation-delay:.2s}
+.pulse span:nth-child(3){animation-delay:.4s}
+@keyframes p{0%,80%,100%{opacity:.2;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+.paywall{border:1px solid var(--border-strong);border-radius:16px;padding:28px;background:rgba(201,151,63,.04);margin:24px 0;position:relative;overflow:hidden}
+.paywall::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.paywall-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:var(--gold-light);margin-bottom:8px}
+.paywall-body{font-size:14px;color:var(--text-body);line-height:1.7;margin-bottom:24px}
+.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.price-card{background:rgba(15,24,41,.8);border:1px solid var(--border);border-radius:12px;padding:18px;cursor:pointer;transition:all .2s}
+.price-card:hover{border-color:var(--border-strong)}
+.price-card.selected{border-color:var(--gold);background:rgba(201,151,63,.08)}
+.price-badge{display:inline-block;background:var(--gold);color:var(--navy);font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;padding:3px 8px;border-radius:4px;margin-bottom:10px}
+.price-name{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--cream-dim);margin-bottom:4px}
+.price-amount{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:500;color:var(--gold-light);line-height:1.1;margin-bottom:6px}
+.price-desc{font-size:11px;color:var(--text-muted);line-height:1.5}
+.loading-steps{display:flex;flex-direction:column;gap:12px}
+.loading-step{display:flex;align-items:center;gap:12px;font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--text-muted);transition:color .3s}
+.loading-step.done{color:var(--gold-dim)}.loading-step.active{color:var(--cream-dim)}
+.step-check{width:18px;height:18px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;color:var(--text-muted)}
+.step-check.done{background:rgba(201,151,63,.2);border-color:var(--gold-dim);color:var(--gold)}
+.profile-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(26,37,64,.8);border:1px solid var(--border);border-radius:12px;margin-bottom:16px}
+.profile-bar-name{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--gold-light)}
+.profile-bar-coords{font-size:12px;color:var(--text-muted);letter-spacing:.04em}
+.foot-note{text-align:center;font-size:12px;color:var(--text-muted);line-height:1.7;margin-top:32px;padding-top:24px;border-top:1px solid var(--border)}
+.foot-note em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-dim)}
+@media(max-width:480px){.price-grid{grid-template-columns:1fr}.coords{grid-template-columns:1fr}.hero h1{font-size:48px}.card{padding:20px}}
 </style>
 </head>
 <body>
-
 <div class="app">
 
+<!-- SCREEN 1: ENTRY -->
 <div class="screen active" id="s-entry">
   <header class="site-header">
     <div class="logo">
       <div class="logo-mark">✦</div>
-      <div class="logo-text">
+      <div style="display:flex;flex-direction:column">
         <div class="logo-name">The Eighth Day</div>
         <div class="logo-sub">Biblical Pattern Readings</div>
       </div>
     </div>
   </header>
-
   <div class="hero">
-    <div class="hero-ornament">⸻  ✦  ⸻</div>
+    <div class="hero-ornament">⸻ ✦ ⸻</div>
     <h1>Know <em>where</em><br>you stand.</h1>
     <p class="hero-sub">Your date of birth encodes four biblical coordinates. Discover your number signature, your tribal inheritance, and the shape your life is moving through right now.</p>
   </div>
-
   <div class="card">
     <div class="card-title">Enter your date of birth</div>
-    <p class="card-body" style="margin-bottom:20px">The system calculates your four coordinates instantly from the biblical pattern system described in <em>The Eighth Day</em>.</p>
-
+    <p class="card-body" style="margin-bottom:20px">The system calculates your four coordinates from the biblical pattern system in <em>The Eighth Day</em>.</p>
     <div class="field">
       <label>Date of birth</label>
       <input type="date" id="dob-input" max="2008-01-01" min="1920-01-01">
     </div>
-
     <div class="includes">
-      <div class="include-item"><div class="check">✦</div><div class="include-text">Your four biblical coordinates</div></div>
-      <div class="include-item"><div class="check">✦</div><div class="include-text">Full number profile with theological depth</div></div>
-      <div class="include-item"><div class="check">✦</div><div class="include-text">Tribal inheritance &amp; gemstone reading</div></div>
-      <div class="include-item"><div class="check">✦</div><div class="include-text">Integrated profile — who you are and what drives you</div></div>
-      <div class="include-item"><div class="lock">🔒</div><div class="include-text locked">Personalised action plan for your current situation</div></div>
-      <div class="include-item"><div class="lock">🔒</div><div class="include-text locked">Prayers, practices, and what to avoid — tailored to you</div></div>
+      <div class="include-item"><div class="icon-circle icon-check">✦</div><div class="include-text">Your four biblical coordinates</div></div>
+      <div class="include-item"><div class="icon-circle icon-check">✦</div><div class="include-text">Full number profile with theological depth</div></div>
+      <div class="include-item"><div class="icon-circle icon-check">✦</div><div class="include-text">Tribal inheritance &amp; gemstone reading</div></div>
+      <div class="include-item"><div class="icon-circle icon-check">✦</div><div class="include-text">Integrated profile — who you are and what drives you</div></div>
+      <div class="include-item"><div class="icon-circle icon-lock">🔒</div><div class="include-text locked">Personalised action plan for your current situation</div></div>
+      <div class="include-item"><div class="icon-circle icon-lock">🔒</div><div class="include-text locked">Prayers, practices, and what to avoid — tailored to you</div></div>
     </div>
-
     <button class="btn btn-primary btn-full" onclick="startReading()" style="margin-top:8px">Generate My Free Reading →</button>
   </div>
-
-  <div class="foot-note">
-    A reflective and formative framework drawn from scripture — not divination.<br>
-    Based on <em>The Eighth Day</em> by Adam W. Page.
-  </div>
+  <div class="foot-note">A reflective framework drawn from scripture — not divination.<br>Based on <em>The Eighth Day</em> by Adam W. Page.</div>
 </div>
 
-
+<!-- SCREEN 2: LOADING -->
 <div class="screen" id="s-loading">
   <header class="site-header">
-    <div class="logo">
-      <div class="logo-mark">✦</div>
-      <div class="logo-text">
-        <div class="logo-name">The Eighth Day</div>
-        <div class="logo-sub">Calculating your coordinates…</div>
-      </div>
-    </div>
+    <div class="logo"><div class="logo-mark">✦</div><div style="display:flex;flex-direction:column"><div class="logo-name">The Eighth Day</div><div class="logo-sub">Calculating…</div></div></div>
   </header>
-
   <div class="card" style="margin-top:40px">
     <div class="card-title" style="margin-bottom:24px">Reading the pattern…</div>
     <div class="loading-steps" id="loading-steps">
@@ -440,93 +147,49 @@ body::before {
       <div class="loading-step" id="ls-3"><div class="step-check" id="sc-3">○</div>Determining life archetype</div>
       <div class="loading-step" id="ls-4"><div class="step-check" id="sc-4">○</div>Composing your reading</div>
     </div>
-    <div style="margin-top:28px">
-      <div class="loader"><div class="pulse"><span></span><span></span><span></span></div><span id="loading-label">Beginning…</span></div>
-    </div>
+    <div style="margin-top:28px"><div class="loader"><div class="pulse"><span></span><span></span><span></span></div><span id="loading-label">Beginning…</span></div></div>
   </div>
 </div>
 
-
+<!-- SCREEN 3: READING -->
 <div class="screen" id="s-reading">
   <header class="site-header">
-    <div class="logo">
-      <div class="logo-mark">✦</div>
-      <div class="logo-text">
-        <div class="logo-name">The Eighth Day</div>
-        <div class="logo-sub" id="r-dob-label"></div>
-      </div>
-    </div>
+    <div class="logo"><div class="logo-mark">✦</div><div style="display:flex;flex-direction:column"><div class="logo-name">The Eighth Day</div><div class="logo-sub" id="r-dob-label"></div></div></div>
     <button class="btn btn-ghost" onclick="reset()" style="font-size:12px">New reading</button>
   </header>
-
   <div class="profile-bar">
     <div class="profile-bar-name" id="r-profile-name">Your profile</div>
     <div class="profile-bar-coords" id="r-profile-coords"></div>
   </div>
-
   <div class="card">
     <div class="card-title" style="margin-bottom:16px">Your four coordinates</div>
-    <div style="margin-bottom:16px">
-      <div class="coord-label">Number profile</div>
-      <div class="num-row" id="num-badges"></div>
-    </div>
+    <div style="margin-bottom:16px"><div class="coord-label">Number profile</div><div class="num-row" id="num-badges"></div></div>
     <div class="divider"><span>✦</span></div>
     <div class="coords" id="coord-grid"></div>
   </div>
-
-  <div class="card">
-    <div id="reading-stream" class="reading-body">
-      <div class="loader"><div class="pulse"><span></span><span></span><span></span></div>Composing your reading…</div>
-    </div>
-  </div>
-
-  <div class="paywall" id="paywall">
+  <div class="card"><div id="reading-stream" class="reading-body"><div class="loader"><div class="pulse"><span></span><span></span><span></span></div>Composing your reading…</div></div></div>
+  <div class="paywall">
     <div class="paywall-title">Unlock your action plan</div>
-    <div class="paywall-body">Your reading shows <em>what</em> your pattern is. The action plan tells you <em>what to do about it right now</em> — specific to your current situation. Includes: what to do, what to avoid, a daily practice, how your tribal gift applies, a personal prayer, and the long view.</div>
+    <div class="paywall-body">Your reading shows <em>what</em> your pattern is. The action plan tells you <em>what to do about it right now</em> — specific to your situation.</div>
     <div class="price-grid">
-      <div class="price-card" id="pc-single" onclick="selectPrice('single')">
-        <div class="price-name">Single reading</div>
-        <div class="price-amount">£9.99</div>
-        <div class="price-desc">Full action plan for one current situation. One-time.</div>
-      </div>
-      <div class="price-card selected" id="pc-full" onclick="selectPrice('full')">
-        <div class="price-badge">Best value</div>
-        <div class="price-name">Full toolkit</div>
-        <div class="price-amount">£24.99</div>
-        <div class="price-desc">Unlimited plans + downloadable profile PDF + prayer guide.</div>
-      </div>
+      <div class="price-card" id="pc-single" onclick="selectPrice('single')"><div class="price-name">Single reading</div><div class="price-amount">£9.99</div><div class="price-desc">Full action plan for one situation. One-time.</div></div>
+      <div class="price-card selected" id="pc-full" onclick="selectPrice('full')"><div class="price-badge">Best value</div><div class="price-name">Full toolkit</div><div class="price-amount">£24.99</div><div class="price-desc">Unlimited plans + PDF + prayer guide.</div></div>
     </div>
     <button class="btn btn-primary btn-full" onclick="goToSituation()">Unlock Action Plan →</button>
   </div>
 </div>
 
-
+<!-- SCREEN 4: SITUATION -->
 <div class="screen" id="s-situation">
   <header class="site-header">
-    <div class="logo">
-      <div class="logo-mark">✦</div>
-      <div class="logo-text">
-        <div class="logo-name">The Eighth Day</div>
-        <div class="logo-sub">Your personalised action plan</div>
-      </div>
-    </div>
+    <div class="logo"><div class="logo-mark">✦</div><div style="display:flex;flex-direction:column"><div class="logo-name">The Eighth Day</div><div class="logo-sub">Action Plan</div></div></div>
     <button class="btn btn-ghost" onclick="show('s-reading')" style="font-size:12px">← Back</button>
   </header>
-
-  <div class="profile-bar">
-    <div class="profile-bar-name" id="sit-profile-name"></div>
-    <div class="profile-bar-coords" id="sit-profile-coords"></div>
-  </div>
-
+  <div class="profile-bar"><div class="profile-bar-name" id="sit-profile-name"></div><div class="profile-bar-coords" id="sit-profile-coords"></div></div>
   <div class="card">
     <div class="card-title">Your current situation</div>
-    <p class="card-body" style="margin-bottom:20px">Be as specific as you can. The more detail you give, the more targeted the guidance.</p>
-
-    <div class="field">
-      <label>Describe what you are facing</label>
-      <textarea id="situation-input" placeholder="e.g. I've just left a long-term career and I'm not sure whether to go back or build something of my own…"></textarea>
-    </div>
-
+    <p class="card-body" style="margin-bottom:20px">Be as specific as you can. The more detail, the more targeted the guidance.</p>
+    <div class="field"><label>Describe what you are facing</label><textarea id="situation-input" placeholder="e.g. I've just left a long-term career and I'm not sure whether to go back or build something of my own…"></textarea></div>
     <div class="field">
       <label>What matters most to you right now?</label>
       <select id="priority-select">
@@ -541,184 +204,138 @@ body::before {
         <option value="transition">Major life transition</option>
       </select>
     </div>
-
     <button class="btn btn-primary btn-full" onclick="generatePlan()">Generate My Action Plan →</button>
   </div>
 </div>
 
-
+<!-- SCREEN 5: PLAN -->
 <div class="screen" id="s-plan">
   <header class="site-header">
-    <div class="logo">
-      <div class="logo-mark">✦</div>
-      <div class="logo-text">
-        <div class="logo-name">The Eighth Day</div>
-        <div class="logo-sub">Your action plan</div>
-      </div>
-    </div>
+    <div class="logo"><div class="logo-mark">✦</div><div style="display:flex;flex-direction:column"><div class="logo-name">The Eighth Day</div><div class="logo-sub">Your action plan</div></div></div>
     <button class="btn btn-ghost" onclick="show('s-situation')" style="font-size:12px">← New situation</button>
   </header>
-
-  <div class="profile-bar">
-    <div class="profile-bar-name" id="plan-profile-name"></div>
-    <div class="profile-bar-coords" id="plan-profile-coords"></div>
-  </div>
-
-  <div class="card">
-    <div id="plan-stream" class="reading-body">
-      <div class="loader"><div class="pulse"><span></span><span></span><span></span></div>Crafting your action plan…</div>
-    </div>
-  </div>
-
-  <div class="foot-note">
-    <em>The Eighth Day</em> — a biblical pattern system for understanding who you are and where you are going.<br>
-    By Adam W. Page
-  </div>
+  <div class="profile-bar"><div class="profile-bar-name" id="plan-profile-name"></div><div class="profile-bar-coords" id="plan-profile-coords"></div></div>
+  <div class="card"><div id="plan-stream" class="reading-body"><div class="loader"><div class="pulse"><span></span><span></span><span></span></div>Crafting your action plan…</div></div></div>
+  <div class="foot-note"><em>The Eighth Day</em> — a biblical pattern system for understanding who you are and where you are going.<br>By Adam W. Page</div>
 </div>
 
-</div>
+</div><!-- /app -->
 
 <script>
+// ── CONFIG ──────────────────────────────────────────────
+// Paste your Gemini API key here between the quotes
+const GEMINI_KEY = 'AIzaSyDVYbrgBqavVkdheQjnF8mTWgbJJIcTtQQ';
+// ────────────────────────────────────────────────────────
+
 let profile = {};
 let selectedPrice = 'full';
 
-function show(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0, 0);
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
+function reset(){document.getElementById('dob-input').value='';show('s-entry')}
+function selectPrice(p){selectedPrice=p;document.getElementById('pc-single').classList.toggle('selected',p==='single');document.getElementById('pc-full').classList.toggle('selected',p==='full')}
+function goToSituation(){document.getElementById('sit-profile-name').textContent=document.getElementById('r-profile-name').textContent;document.getElementById('sit-profile-coords').textContent=document.getElementById('r-profile-coords').textContent;show('s-situation')}
+function formatDate(dob){const d=new Date(dob+'T12:00:00');return d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}
+function reduce(n){while(n>9){n=String(n).split('').reduce((a,b)=>a+parseInt(b),0)}return n}
+
+function calcProfile(dob){
+  const d=new Date(dob+'T12:00:00');
+  const day=d.getDate(),month=d.getMonth()+1,year=d.getFullYear();
+  const dayN=reduce(day),monthN=reduce(month),yearN=reduce(year),rootN=reduce(dayN+monthN+yearN);
+  const hm=['Tevet','Shevat','Adar','Nisan','Iyyar','Sivan','Tammuz','Av','Elul','Tishrei','Cheshvan','Kislev'];
+  const tr=['Reuben','Simeon','Levi','Judah','Dan','Naphtali','Gad','Asher','Issachar','Zebulun','Joseph','Benjamin'];
+  const gm=['Sardius','Topaz','Carbuncle','Emerald','Sapphire','Diamond','Jacinth','Beryl','Agate','Amethyst','Onyx','Jasper'];
+  const ar={1:'Esther Moment / Nehemiah Rebuild',2:'Prodigal Return / Job Interrogation',3:'Joseph Arc',4:'Wilderness Season / Nehemiah Rebuild',5:'Esther Moment / Prodigal Return',6:'Elijah Exhaustion / Prodigal Return',7:'Wilderness Season / Job Interrogation',8:'Joseph Arc / Nehemiah Rebuild',9:'Elijah Exhaustion / Esther Moment'};
+  return{day,month,year,dayN,monthN,yearN,rootN,hebrewMonth:hm[month-1],tribe:tr[(dayN-1+12)%12],gem:gm[(dayN-1+12)%12],archetype:ar[rootN],dob};
 }
 
-function reset() {
-  document.getElementById('dob-input').value = '';
-  show('s-entry');
-}
-
-function selectPrice(p) {
-  selectedPrice = p;
-  document.getElementById('pc-single').classList.toggle('selected', p === 'single');
-  document.getElementById('pc-full').classList.toggle('selected', p === 'full');
-}
-
-function goToSituation() {
-  document.getElementById('sit-profile-name').textContent = document.getElementById('r-profile-name').textContent;
-  document.getElementById('sit-profile-coords').textContent = document.getElementById('r-profile-coords').textContent;
-  show('s-situation');
-}
-
-function formatDate(dob) {
-  const d = new Date(dob + 'T12:00:00');
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-}
-
-function reduce(n) {
-  while (n > 9) { n = String(n).split('').reduce((a, b) => a + parseInt(b), 0); }
-  return n;
-}
-
-function calcProfile(dob) {
-  const d = new Date(dob + 'T12:00:00');
-  const day = d.getDate(), month = d.getMonth() + 1, year = d.getFullYear();
-  const dayN = reduce(day), monthN = reduce(month), yearN = reduce(year);
-  const rootN = reduce(dayN + monthN + yearN);
-  const hebrewMonths = ['Tevet','Shevat','Adar','Nisan','Iyyar','Sivan','Tammuz','Av','Elul','Tishrei','Cheshvan','Kislev'];
-  const tribes = ['Reuben','Simeon','Levi','Judah','Dan','Naphtali','Gad','Asher','Issachar','Zebulun','Joseph','Benjamin'];
-  const gems = ['Sardius','Topaz','Carbuncle','Emerald','Sapphire','Diamond','Jacinth','Beryl','Agate','Amethyst','Onyx','Jasper'];
-  const archetypes = {1:'Esther Moment / Nehemiah Rebuild',2:'Prodigal Return / Job Interrogation',3:'Joseph Arc',4:'Wilderness Season / Nehemiah Rebuild',5:'Esther Moment / Prodigal Return',6:'Elijah Exhaustion / Prodigal Return',7:'Wilderness Season / Job Interrogation',8:'Joseph Arc / Nehemiah Rebuild',9:'Elijah Exhaustion / Esther Moment'};
-  const tribeIdx = (dayN - 1 + 12) % 12;
-  return { day, month, year, dayN, monthN, yearN, rootN, hebrewMonth: hebrewMonths[month-1], tribe: tribes[tribeIdx], gem: gems[tribeIdx], archetype: archetypes[rootN], dob };
-}
-
-async function startReading() {
-  const dob = document.getElementById('dob-input').value;
-  if (!dob) { alert('Please enter your date of birth.'); return; }
-  profile = calcProfile(dob);
+async function startReading(){
+  const dob=document.getElementById('dob-input').value;
+  if(!dob){alert('Please enter your date of birth.');return}
+  if(GEMINI_KEY==='PASTE_YOUR_KEY_HERE'){alert('Please add your Gemini API key to the HTML file.');return}
+  profile=calcProfile(dob);
   show('s-loading');
   await runLoadingSteps();
   buildReadingUI();
   show('s-reading');
-  await streamContent(buildReadingPrompt(), 'reading-stream');
+  await callGemini(buildReadingPrompt(),'reading-stream');
 }
 
-async function runLoadingSteps() {
-  const labels = ['Mapping number profile…','Identifying liturgical season…','Assigning tribal coordinate…','Determining life archetype…','Composing your reading…'];
-  for (let i = 0; i < labels.length; i++) {
+async function runLoadingSteps(){
+  const labels=['Mapping number profile…','Identifying liturgical season…','Assigning tribal coordinate…','Determining life archetype…','Composing your reading…'];
+  for(let i=0;i<labels.length;i++){
     document.getElementById('ls-'+i).classList.add('active');
-    document.getElementById('loading-label').textContent = labels[i];
+    document.getElementById('loading-label').textContent=labels[i];
     await sleep(650);
     document.getElementById('ls-'+i).classList.remove('active');
     document.getElementById('ls-'+i).classList.add('done');
     document.getElementById('sc-'+i).classList.add('done');
-    document.getElementById('sc-'+i).textContent = '✦';
+    document.getElementById('sc-'+i).textContent='✦';
   }
 }
 
-function buildReadingUI() {
-  const p = profile;
-  document.getElementById('r-dob-label').textContent = formatDate(p.dob);
-  document.getElementById('r-profile-name').textContent = p.tribe + ' · ' + p.hebrewMonth;
-  document.getElementById('r-profile-coords').textContent = p.dayN+'·'+p.monthN+'·'+p.yearN+'·'+p.rootN;
-  document.getElementById('num-badges').innerHTML = [p.dayN,p.monthN,p.yearN].map(n=>'<div class="num-badge">'+n+'</div>').join('')+'<div class="num-badge root">'+p.rootN+'</div>';
-  document.getElementById('coord-grid').innerHTML = '<div class="coord-box"><div class="coord-label">Liturgical season</div><div class="coord-value">'+p.hebrewMonth+'</div><div class="coord-detail">Hebrew birth month</div></div><div class="coord-box"><div class="coord-label">Tribal inheritance</div><div class="coord-value">'+p.tribe+'</div><div class="coord-detail">Gemstone: '+p.gem+'</div></div><div class="coord-box" style="grid-column:1/-1"><div class="coord-label">Life archetype</div><div class="coord-value" style="font-size:16px">'+p.archetype+'</div><div class="coord-detail">Root '+p.rootN+' predisposition</div></div>';
+function buildReadingUI(){
+  const p=profile;
+  document.getElementById('r-dob-label').textContent=formatDate(p.dob);
+  document.getElementById('r-profile-name').textContent=p.tribe+' · '+p.hebrewMonth;
+  document.getElementById('r-profile-coords').textContent=p.dayN+'·'+p.monthN+'·'+p.yearN+'·'+p.rootN;
+  document.getElementById('num-badges').innerHTML=[p.dayN,p.monthN,p.yearN].map(n=>'<div class="num-badge">'+n+'</div>').join('')+'<div class="num-badge root">'+p.rootN+'</div>';
+  document.getElementById('coord-grid').innerHTML='<div class="coord-box"><div class="coord-label">Liturgical season</div><div class="coord-value">'+p.hebrewMonth+'</div><div class="coord-detail">Hebrew birth month</div></div><div class="coord-box"><div class="coord-label">Tribal inheritance</div><div class="coord-value">'+p.tribe+'</div><div class="coord-detail">Gemstone: '+p.gem+'</div></div><div class="coord-box" style="grid-column:1/-1"><div class="coord-label">Life archetype</div><div class="coord-value" style="font-size:16px">'+p.archetype+'</div><div class="coord-detail">Root '+p.rootN+' predisposition</div></div>';
 }
 
-function buildReadingPrompt() {
-  const p = profile;
-  return 'You are the author of The Eighth Day, a book on biblical pattern readings. Generate a deeply personal biblical reading for someone born on '+formatDate(p.dob)+'.\n\nTheir four coordinates:\n- Number profile: Day '+p.dayN+', Month '+p.monthN+', Year '+p.yearN+', Root '+p.rootN+'\n- Liturgical season: '+p.hebrewMonth+'\n- Tribal inheritance: '+p.tribe+' (gemstone: '+p.gem+')\n- Life archetype: '+p.archetype+'\n\nWrite approximately 450 words in a warm, direct, literary voice. Use these five sections, each preceded by its title in bold markdown (**Title**):\n\n**Your number signature** — interpret the specific combination of numbers, especially any patterns or repetitions. Reference what each number carries theologically.\n\n**Your season** — the Hebrew month of birth and its spiritual and agricultural character. Be specific to this month\'s biblical narrative.\n\n**Your inheritance** — the tribal blessing from Genesis 49 and Deuteronomy 33, the gemstone quality, and what this inheritance means practically.\n\n**Your pattern** — the life archetype and what it means for the shape their life takes. Be specific.\n\n**The whole picture** — 2-3 sentences integrating all four coordinates into one coherent statement.\n\nVoice: confident, specific, theologically grounded. No AI clichés. Write as if you know them.';
+function buildReadingPrompt(){
+  const p=profile;
+  return 'You are the author of The Eighth Day, a book on biblical pattern readings. Generate a deeply personal biblical reading for someone born on '+formatDate(p.dob)+'.\n\nTheir four coordinates:\n- Number profile: Day '+p.dayN+', Month '+p.monthN+', Year '+p.yearN+', Root '+p.rootN+'\n- Liturgical season: '+p.hebrewMonth+'\n- Tribal inheritance: '+p.tribe+' (gemstone: '+p.gem+')\n- Life archetype: '+p.archetype+'\n\nWrite approximately 450 words. Use these five sections each preceded by its title in bold (**Title**):\n\n**Your number signature** — interpret the numbers theologically.\n**Your season** — the Hebrew month and its biblical significance.\n**Your inheritance** — the tribal blessing, gemstone, and practical meaning.\n**Your pattern** — the life archetype and what it means specifically.\n**The whole picture** — 2-3 sentences integrating all four coordinates.\n\nWarm, direct, literary voice. No AI clichés. Write as if you know them.';
 }
 
-async function generatePlan() {
-  const situation = document.getElementById('situation-input').value.trim();
-  const priority = document.getElementById('priority-select').value;
-  if (!situation) { alert('Please describe your current situation.'); return; }
-  document.getElementById('plan-profile-name').textContent = document.getElementById('r-profile-name').textContent;
-  document.getElementById('plan-profile-coords').textContent = document.getElementById('r-profile-coords').textContent;
+async function generatePlan(){
+  const situation=document.getElementById('situation-input').value.trim();
+  const priority=document.getElementById('priority-select').value;
+  if(!situation){alert('Please describe your current situation.');return}
+  document.getElementById('plan-profile-name').textContent=document.getElementById('r-profile-name').textContent;
+  document.getElementById('plan-profile-coords').textContent=document.getElementById('r-profile-coords').textContent;
   show('s-plan');
-  await streamContent(buildPlanPrompt(situation, priority), 'plan-stream');
+  await callGemini(buildPlanPrompt(situation,priority),'plan-stream');
 }
 
-function buildPlanPrompt(situation, priority) {
-  const p = profile;
-  return 'You are the author of The Eighth Day. Generate a personalised action plan for someone with this biblical profile:\n\nNumber profile: '+p.dayN+'·'+p.monthN+'·'+p.yearN+'·'+p.rootN+' (Root '+p.rootN+')\nLiturgical season: '+p.hebrewMonth+'\nTribal inheritance: '+p.tribe+' (gemstone: '+p.gem+')\nLife archetype: '+p.archetype+'\n\nCurrent situation: '+situation+'\n'+(priority?'What matters most: '+priority:'')+'\n\nWrite a structured action plan with six sections in bold markdown (**Title**). Be concrete — tie every recommendation to their biblical coordinates.\n\n**What to do right now** — 3 specific actions. Each on its own line starting with a dash.\n\n**What to avoid** — 3 specific patterns to avoid. Each on its own line starting with a dash.\n\n**This week\'s practice** — one daily discipline aligned with their tribal blessing. 2-3 sentences.\n\n**How your gift shows up here** — how the '+p.tribe+' tribal gift applies right now.\n\n**A prayer for this season** — a short specific prayer in first person tied to their actual situation.\n\n**The long view** — 3 sentences on what this season is forming in them.\n\nVoice: direct, warm, theologically grounded. No clichés.';
+function buildPlanPrompt(situation,priority){
+  const p=profile;
+  return 'You are the author of The Eighth Day. Personalised action plan for:\nProfile: '+p.dayN+'·'+p.monthN+'·'+p.yearN+'·'+p.rootN+'\nSeason: '+p.hebrewMonth+'\nTribe: '+p.tribe+' ('+p.gem+')\nArchetype: '+p.archetype+'\nSituation: '+situation+'\n'+(priority?'Priority: '+priority:'')+'\n\nSix sections in bold markdown:\n**What to do right now** — 3 specific actions, each on a line starting with a dash.\n**What to avoid** — 3 patterns to avoid, each on a line starting with a dash.\n**This weeks practice** — one daily discipline aligned to their tribal blessing.\n**How your gift shows up here** — how the '+p.tribe+' gift applies right now.\n**A prayer for this season** — short specific first-person prayer.\n**The long view** — 3 sentences on what this season is forming.\n\nDirect, warm, theologically grounded. No clichés.';
 }
 
-async function streamContent(prompt, containerId) {
-  const container = document.getElementById(containerId);
-  container.innerHTML = '<div class="loader"><div class="pulse"><span></span><span></span><span></span></div>Writing…</div>';
-  try {
-const res = await fetch('/.netlify/functions/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt })
+async function callGemini(prompt, containerId){
+  const container=document.getElementById(containerId);
+  container.innerHTML='<div class="loader"><div class="pulse"><span></span><span></span><span></span></div>Writing…</div>';
+  try{
+    const res=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key='+GEMINI_KEY,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        contents:[{role:'user',parts:[{text:prompt}]}],
+        generationConfig:{temperature:0.85,maxOutputTokens:1200}
+      })
     });
-    if (!res.ok) throw new Error('API error ' + res.status);
-    const data = await res.json();
-    const text = data.text || '';
-    if (!text) throw new Error('No content returned');
-    container.innerHTML = '';
-    const words = text.split(' ');
-    let built = '';
-    for (let i = 0; i < words.length; i++) {
-      built += (i === 0 ? '' : ' ') + words[i];
-      container.innerHTML = renderText(built);
-      if (i % 8 === 0) await sleep(30);
+    if(!res.ok){const e=await res.json();throw new Error(e?.error?.message||'Status '+res.status)}
+    const data=await res.json();
+    const text=data?.candidates?.[0]?.content?.parts?.[0]?.text||'';
+    if(!text)throw new Error('No content returned');
+    container.innerHTML='';
+    const words=text.split(' ');
+    let built='';
+    for(let i=0;i<words.length;i++){
+      built+=(i===0?'':' ')+words[i];
+      container.innerHTML=renderText(built);
+      if(i%8===0)await sleep(30);
     }
-  } catch (err) {
-    container.innerHTML = '<p style="color:var(--text-muted);font-style:italic">Unable to generate at this time. Please try again.<br><small>' + err.message + '</small></p>';
+  }catch(err){
+    container.innerHTML='<p style="color:var(--text-muted);font-style:italic">Unable to generate. Error: '+err.message+'</p>';
   }
 }
 
-function renderText(text) {
-  return text
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/^- (.+)$/gm, '<span style="display:block;padding-left:16px;margin-bottom:6px">— $1</span>')
-    .replace(/\n\n/g, '</p><p>')
-    .replace(/\n/g, '<br>')
-    .replace(/^/, '<p>')
-    .replace(/$/, '</p>');
+function renderText(t){
+  return t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/^- (.+)$/gm,'<span style="display:block;padding-left:16px;margin-bottom:6px">— $1</span>').replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>').replace(/^/,'<p>').replace(/$/,'</p>');
 }
 
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
 </script>
 </body>
 </html>
