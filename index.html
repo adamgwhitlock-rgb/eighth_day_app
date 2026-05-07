@@ -685,7 +685,7 @@ async function streamContent(prompt, containerId) {
   const container = document.getElementById(containerId);
   container.innerHTML = '<div class="loader"><div class="pulse"><span></span><span></span><span></span></div>Writing…</div>';
   try {
-const res = await fetch('/.netlify/functions/chat', {
+const res = await fetch('/.netlify/functions/chat.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ prompt })
